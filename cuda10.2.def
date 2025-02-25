@@ -1,0 +1,66 @@
+Bootstrap: docker
+From: debian:buster
+
+%labels
+    Author Francesco Lovergine
+    ContactEmail frankie@debian.org
+    Name Cuda Toolkit 10.2
+
+%environment
+    export PATH=/usr/local/cuda/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+    export CUDA_HOME=/usr/local/cuda
+
+%setup
+    cp $HOME/cuda/cuda_10.2.*.run ${APPTAINER_ROOTFS}/opt/
+
+%post
+    apt update
+    apt install -y \
+        wget gnupg apt-transport-https ca-certificates \
+        build-essential \
+        pkg-config \
+        cmake \
+        automake autoconf libtool \
+        zip unzip bzip2 \
+        kmod \
+        xz-utils \
+        libglvnd-dev \
+        apt-utils \
+        curl \
+        git \
+        gzip \
+        tar \
+        make \
+        cmake \
+        libtool \
+        swig \
+        sqlite3 \
+        zlib1g-dev \
+        libgdal-dev \
+        libproj-dev \
+        libgeotiff-dev \
+        libgsl-dev \
+        libgsl0-dev \
+        libfann-dev \
+        libfann2 \
+        libfftw3-dev \
+        libssl-dev \
+        libshp-dev \
+        uthash-dev \
+        libopenblas-dev \
+        libjsoncpp-dev \
+        libboost-serialization-dev \
+        libboost-filesystem-dev \
+        lsb-release 
+
+    /opt/cuda_10.2.89_440.33.01_linux.run --toolkit --silent
+    /opt/cuda_10.2.1_linux.run --silent --override
+    /opt/cuda_10.2.2_linux.run --silent --override
+    
+    apt clean
+    rm -f /opt/cuda*run
+
+%test
+    gcc --version
+    nvcc --version
