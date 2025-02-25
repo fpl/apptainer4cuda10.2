@@ -35,3 +35,33 @@ apptainer shell --nv cuda10.2.sif
 
 Eventually, it is possible to create derived SIF images starting from the
 basic generated image with the toolkit in order to use other tools.
+
+If all is working correctly you should get something like:
+
+```
+$ apptainer exec --nv cuda10.2.sif nvidia-smi
+
+Tue Feb 25 17:57:40 2025       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.199.02   Driver Version: 470.199.02   CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Quadro K5000        Off  | 00000000:03:00.0  On |                  Off |
+| 33%   51C    P0    41W / 137W |   1003MiB /  4035MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      4146      G   /usr/lib/xorg/Xorg                312MiB |
+|    0   N/A  N/A      4555      G   /usr/bin/gnome-shell              184MiB |
+|    0   N/A  N/A      8860      G   /opt/firefox/firefox              455MiB |
++-----------------------------------------------------------------------------+
+
+```
